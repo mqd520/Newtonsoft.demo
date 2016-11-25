@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Newtonsoft.demo
 {
@@ -94,6 +95,49 @@ namespace Newtonsoft.demo
                 string str = "{\"_int\":1,\"_string\":\"_string\",\"_datetime\":\"2014-09-14 22:17:53\",\"_bool\":true}";
                 DataTable dt = JsonConvert.DeserializeObject<DataTable>(str);
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Random ran = new Random((int)DateTime.Now.Ticks);
+            int count = ran.Next(1, 10);
+            for (int i = 0; i < count; i++)
+            {
+                dict.Add(string.Format("para{0}", i), string.Format("value{0}", i));
+            }
+
+            JArray arrs = new JArray();
+            foreach (var item in dict)
+            {
+                JObject o = new JObject();
+                o[item.Key] = item.Value;
+                arrs.Add(o);
+            }
+            string json = JsonConvert.SerializeObject(arrs, Formatting.Indented);
+            Console.WriteLine(json);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            Random ran = new Random((int)DateTime.Now.Ticks);
+            int count = ran.Next(1, 10);
+            for (int i = 0; i < count; i++)
+            {
+                dict.Add(string.Format("para{0}", i), string.Format("value{0}", i));
+            }
+
+            JArray arrs = new JArray();
+            foreach (var item in dict)
+            {
+                JObject o = new JObject();
+                o[item.Key] = item.Value;
+                o["para"] = ran.Next(20, 100).ToString();
+                arrs.Add(o);
+            }
+            string json = JsonConvert.SerializeObject(arrs, Formatting.Indented);
+            Console.WriteLine(json);
         }
     }
 }
