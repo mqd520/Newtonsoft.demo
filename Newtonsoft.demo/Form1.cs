@@ -93,7 +93,16 @@ namespace Newtonsoft.demo
 
             {
                 string str = "{\"_int\":1,\"_string\":\"_string\",\"_datetime\":\"2014-09-14 22:17:53\",\"_bool\":true}";
-                DataTable dt = JsonConvert.DeserializeObject<DataTable>(str);
+                JObject jo = JObject.Parse(str);
+                string _str = jo["_string"].ToString();
+                int _int = Convert.ToInt32(jo["_int"].ToString());
+            }
+
+            {
+                string str = "{\"code\": 1000, \"msg\": \"\", \"member\": {\"username\": \"zzy_igtest1\", \"balance\": 6252.6}}";
+                JObject jo = JObject.Parse(str);
+                JToken member = jo["member"];
+                double d = member["balance"].Value<double>();
             }
         }
 
